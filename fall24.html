@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Classification System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .algorithm-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #007acc;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 5px;
+        }
+        .problem-statement {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .algorithm-steps {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .algorithm-steps ol {
+            padding-left: 20px;
+        }
+        .algorithm-steps li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .flowchart-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .formula {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 1px solid #b3d9ff;
+            text-align: center;
+            font-weight: bold;
+        }
+        .categories {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Classification System for Healthcare Assistant</h1>
+        
+        <div class="algorithm-section">
+            <div class="problem-statement">
+                <h2>Problem Statement</h2>
+                <p><strong>Classify people based on their Body Mass Index (BMI) into appropriate health zones.</strong></p>
+                
+                <div class="formula">
+                    BMI = (Height (m))² / Weight (kg)
+                </div>
+                
+                <div class="categories">
+                    <h3>BMI Categories:</h3>
+                    <ul>
+                        <li><strong>Underweight:</strong> BMI < 18.5</li>
+                        <li><strong>Healthy Weight:</strong> 18.5 ≤ BMI ≤ 24.9</li>
+                        <li><strong>Overweight:</strong> 25 ≤ BMI ≤ 29.9</li>
+                        <li><strong>Obese:</strong> BMI ≥ 30</li>
+                    </ul>
+                </div>
+                
+                <p><strong>Inputs to the algorithm:</strong></p>
+                <ul>
+                    <li>Height (in meters)</li>
+                    <li>Weight (in kilograms)</li>
+                </ul>
+                
+                <p><strong>Expected output:</strong></p>
+                <ul>
+                    <li>BMI value</li>
+                    <li>Health category classification</li>
+                </ul>
+            </div>
+
+            <div class="algorithm-steps">
+                <h2>Algorithm:</h2>
+                <ol>
+                    <li><strong>Step1:</strong> Start</li>
+                    <li><strong>Step2:</strong> Read/Input Height, Weight</li>
+                    <li><strong>Step3:</strong> BMI ← Weight / (Height * Height)</li>
+                    <li><strong>Step4:</strong> Print BMI</li>
+                    <li><strong>Step5:</strong> If BMI < 18.5 then Print "Underweight"</li>
+                    <li><strong>Step6:</strong> If BMI >= 18.5 AND BMI <= 24.9 then Print "Healthy Weight"</li>
+                    <li><strong>Step7:</strong> If BMI >= 25 AND BMI <= 29.9 then Print "Overweight"</li>
+                    <li><strong>Step8:</strong> If BMI >= 30 then Print "Obese"</li>
+                    <li><strong>Step9:</strong> End</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="flowchart-container">
+            <h2>Flowchart:</h2>
+            <div id="flowchart"></div>
+            <div class="note">
+                <strong>Control Structure Type:</strong> This algorithm uses <strong>Branching (Selection)</strong> control structure with multiple if-then conditions to classify BMI into different health categories.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setup() {
+            let canvas = createCanvas(900, 1600);
+            canvas.parent('flowchart');
+            background(255);
+            noLoop();
+            drawFlowchart();
+        }
+        
+        function drawFlowchart() {
+            // Set text properties
+            textAlign(CENTER, CENTER);
+            textSize(10);
+            
+            let x = 450; // Center x position
+            let y = 60;  // Starting y position
+            
+            // 1. Terminal - Start
+            drawTerminal(x, y, "START");
+            y += 70;
+            drawArrow(x, y-35, x, y-15);
+            
+            // 2. Input - Read Height and Weight
+            drawInputOutput(x, y, "Read Height, Weight");
+            y += 70;
+            drawArrow(x, y-35, x, y-15);
+            
+            // 3. Process - Calculate BMI
+            drawProcess(x, y, "BMI = Weight /\n(Height * Height)");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 4. Output - Print BMI
+            drawInputOutput(x, y, "Print BMI");
+            y += 70;
+            drawArrow(x, y-35, x, y-15);
+            
+            // 5. Decision - BMI < 18.5?
+            drawDecision(x, y, "BMI < 18.5?");
+            let decision1Y = y;
+            
+            // True branch (left) - Underweight
+            let leftX1 = x - 200;
+            drawArrow(x-70, decision1Y, leftX1+30, decision1Y);
+            drawArrow(leftX1+30, decision1Y, leftX1+30, decision1Y+50);
+            drawInputOutput(leftX1+30, decision1Y+80, "Print\n\"Underweight\"");
+            drawArrow(leftX1+30, decision1Y+115, leftX1+30, decision1Y+160);
+            drawTerminal(leftX1+30, decision1Y+190, "END");
+            fill(0);
+            noStroke();
+            text("True", leftX1+80, decision1Y-20);
+            
+            // False branch continues down
+            drawArrow(x, decision1Y+35, x, decision1Y+70);
+            fill(0);
+            noStroke();
+            text("False", x+40, decision1Y+52);
+            
+            // 6. Decision - BMI >= 18.5 AND <= 24.9?
+            let decision2Y = decision1Y + 110;
+            drawDecision(x, decision2Y, "BMI >= 18.5\nAND\nBMI <= 24.9?");
+            
+            // True branch (left) - Healthy Weight
+            let leftX2 = x - 200;
+            drawArrow(x-70, decision2Y, leftX2+30, decision2Y);
+            drawArrow(leftX2+30, decision2Y, leftX2+30, decision2Y+50);
+            drawInputOutput(leftX2+30, decision2Y+80, "Print\n\"Healthy Weight\"");
+            drawArrow(leftX2+30, decision2Y+115, leftX2+30, decision2Y+160);
+            drawTerminal(leftX2+30, decision2Y+190, "END");
+            fill(0);
+            noStroke();
+            text("True", leftX2+80, decision2Y-20);
+            
+            // False branch continues down
+            drawArrow(x, decision2Y+35, x, decision2Y+70);
+            fill(0);
+            noStroke();
+            text("False", x+40, decision2Y+52);
+            
+            // 7. Decision - BMI >= 25 AND <= 29.9?
+            let decision3Y = decision2Y + 110;
+            drawDecision(x, decision3Y, "BMI >= 25\nAND\nBMI <= 29.9?");
+            
+            // True branch (right) - Overweight
+            let rightX = x + 200;
+            drawArrow(x+70, decision3Y, rightX-30, decision3Y);
+            drawArrow(rightX-30, decision3Y, rightX-30, decision3Y+50);
+            drawInputOutput(rightX-30, decision3Y+80, "Print\n\"Overweight\"");
+            drawArrow(rightX-30, decision3Y+115, rightX-30, decision3Y+160);
+            drawTerminal(rightX-30, decision3Y+190, "END");
+            fill(0);
+            noStroke();
+            text("True", rightX-80, decision3Y-20);
+            
+            // False branch continues down (BMI >= 30 - Obese)
+            drawArrow(x, decision3Y+35, x, decision3Y+80);
+            fill(0);
+            noStroke();
+            text("False", x+40, decision3Y+57);
+            
+            // 8. Output - Print Obese
+            drawInputOutput(x, decision3Y+110, "Print \"Obese\"");
+            y = decision3Y + 180;
+            drawArrow(x, y-35, x, y-15);
+            
+            // 9. Terminal - End
+            drawTerminal(x, y, "END");
+        }
+        
+        function drawTerminal(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-60, y-20, 120, 40, 20);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawProcess(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-90, y-30, 180, 60);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawInputOutput(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x-80, y-25, x+60, y-25, x+80, y+25, x-60, y+25);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawDecision(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x, y-40, x+90, y, x, y+40, x-90, y);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawArrow(x1, y1, x2, y2) {
+            stroke(0);
+            strokeWeight(2);
+            line(x1, y1, x2, y2);
+            
+            // Arrowhead
+            push();
+            translate(x2, y2);
+            let angle = atan2(y2-y1, x2-x1);
+            rotate(angle);
+            fill(0);
+            noStroke();
+            triangle(0, 0, -10, -4, -10, 4);
+            pop();
+        }
+    </script>
+</body>
+</html>

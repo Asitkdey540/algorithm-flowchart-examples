@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nila's Coding Schedule</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/2.0.3/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .algorithm-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #007acc;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 5px;
+        }
+        .problem-statement {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .algorithm-steps {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .algorithm-steps ol {
+            padding-left: 20px;
+        }
+        .algorithm-steps li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .flowchart-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .examples {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 1px solid #b3d9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nila's Coding Schedule System</h1>
+        
+        <div class="algorithm-section">
+            <div class="problem-statement">
+                <h2>Problem Statement</h2>
+                <p><strong>Determine Nila's coding duration based on rain duration and conditions:</strong></p>
+                <ul>
+                    <li>If rain duration is <strong>even</strong>: code for <strong>2 times</strong> the rain duration</li>
+                    <li>If rain duration is <strong>odd</strong>: code for <strong>3 times</strong> the rain duration</li>
+                    <li>If rain duration is <strong>0</strong> or <strong>more than 12 hours</strong>: go to <strong>"sleep"</strong></li>
+                </ul>
+                
+                <p><strong>Input to the algorithm:</strong></p>
+                <ul>
+                    <li>Rain duration (in hours)</li>
+                </ul>
+                
+                <p><strong>Expected output:</strong></p>
+                <ul>
+                    <li>Coding duration (in hours) OR "Sleep"</li>
+                </ul>
+            </div>
+
+            <div class="examples">
+                <h3>Sample Test Cases:</h3>
+                <ul>
+                    <li><strong>Input: 4</strong> → Output: 8 (4 is even, so 4*2 = 8)</li>
+                    <li><strong>Input: 5</strong> → Output: 15 (5 is odd, so 5*3 = 15)</li>
+                    <li><strong>Input: 0</strong> → Output: Sleep (0 hours of rain)</li>
+                    <li><strong>Input: 18</strong> → Output: Sleep (more than 12 hours)</li>
+                </ul>
+            </div>
+
+            <div class="algorithm-steps">
+                <h2>Algorithm:</h2>
+                <ol>
+                    <li><strong>Step1:</strong> Start</li>
+                    <li><strong>Step2:</strong> Read/Input Rain_Duration</li>
+                    <li><strong>Step3:</strong> If Rain_Duration = 0 OR Rain_Duration > 12 then Print "Sleep" and go to Step8</li>
+                    <li><strong>Step4:</strong> If Rain_Duration MOD 2 = 0 then Coding_Duration ← Rain_Duration * 2</li>
+                    <li><strong>Step5:</strong> If Rain_Duration MOD 2 ≠ 0 then Coding_Duration ← Rain_Duration * 3</li>
+                    <li><strong>Step6:</strong> Print Coding_Duration</li>
+                    <li><strong>Step7:</strong> End</li>
+                    <li><strong>Step8:</strong> End</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="flowchart-container">
+            <h2>Flowchart:</h2>
+            <div id="flowchart"></div>
+            <div class="note">
+                <strong>Control Structure Type:</strong> This algorithm uses <strong>Branching (Selection)</strong> control structure with multiple if-then conditions to determine coding duration based on rain conditions.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setup() {
+            let canvas = createCanvas(800, 1200);
+            canvas.parent('flowchart');
+            background(255);
+            noLoop();
+            drawFlowchart();
+        }
+        
+        function drawFlowchart() {
+            // Set text properties
+            textAlign(CENTER, CENTER);
+            textSize(11);
+            
+            let x = 400; // Center x position
+            let y = 60;  // Starting y position
+            
+            // 1. Terminal - Start
+            drawTerminal(x, y, "START");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 2. Input - Read Rain Duration
+            drawInputOutput(x, y, "Read\nRain_Duration");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 3. Decision - Rain Duration = 0 OR > 12?
+            drawDecision(x, y, "Rain_Duration = 0\nOR\nRain_Duration > 12?");
+            let decision1Y = y;
+            
+            // True branch (right side) - Sleep
+            let rightX = x + 180;
+            drawArrow(x+60, decision1Y, rightX-20, decision1Y);
+            drawArrow(rightX-20, decision1Y, rightX-20, decision1Y+60);
+            drawInputOutput(rightX-20, decision1Y+90, "Print \"Sleep\"");
+            drawArrow(rightX-20, decision1Y+130, rightX-20, decision1Y+180);
+            drawTerminal(rightX-20, decision1Y+210, "END");
+            fill(0);
+            noStroke();
+            text("True", rightX-60, decision1Y-20);
+            
+            // False branch continues down
+            drawArrow(x, decision1Y+40, x, decision1Y+80);
+            fill(0);
+            noStroke();
+            text("False", x+40, decision1Y+60);
+            
+            // 4. Decision - Rain Duration is Even?
+            let decision2Y = decision1Y + 120;
+            drawDecision(x, decision2Y, "Rain_Duration\nMOD 2 = 0?");
+            
+            // True branch (left side) - Even number
+            let leftX = x - 180;
+            drawArrow(x-60, decision2Y, leftX+20, decision2Y);
+            drawArrow(leftX+20, decision2Y, leftX+20, decision2Y+60);
+            drawProcess(leftX+20, decision2Y+90, "Coding_Duration =\nRain_Duration * 2");
+            fill(0);
+            noStroke();
+            text("True", leftX+60, decision2Y-20);
+            
+            // False branch (right side) - Odd number
+            drawArrow(x+60, decision2Y, x+160, decision2Y);
+            drawArrow(x+160, decision2Y, x+160, decision2Y+60);
+            drawProcess(x+160, decision2Y+90, "Coding_Duration =\nRain_Duration * 3");
+            fill(0);
+            noStroke();
+            text("False", x+110, decision2Y-20);
+            
+            // Converge both branches
+            let convergeY = decision2Y + 180;
+            
+            // Arrows converging from left and right
+            drawArrow(leftX+20, decision2Y+130, leftX+20, convergeY-30);
+            drawArrow(leftX+20, convergeY-30, x, convergeY-30);
+            
+            drawArrow(x+160, decision2Y+130, x+160, convergeY-30);
+            drawArrow(x+160, convergeY-30, x, convergeY-30);
+            
+            drawArrow(x, convergeY-30, x, convergeY-10);
+            
+            // 5. Output - Print Coding Duration
+            drawInputOutput(x, convergeY+20, "Print\nCoding_Duration");
+            y = convergeY + 100;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 6. Terminal - End
+            drawTerminal(x, y, "END");
+        }
+        
+        function drawTerminal(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-60, y-20, 120, 40, 20);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawProcess(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-90, y-30, 180, 60);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawInputOutput(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x-80, y-25, x+60, y-25, x+80, y+25, x-60, y+25);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawDecision(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x, y-40, x+90, y, x, y+40, x-90, y);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawArrow(x1, y1, x2, y2) {
+            stroke(0);
+            strokeWeight(2);
+            line(x1, y1, x2, y2);
+            
+            // Arrowhead
+            push();
+            translate(x2, y2);
+            let angle = atan2(y2-y1, x2-x1);
+            rotate(angle);
+            fill(0);
+            noStroke();
+            triangle(0, 0, -10, -4, -10, 4);
+            pop();
+        }
+    </script>
+</body>
+</html>
