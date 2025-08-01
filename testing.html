@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Salary Calculation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/2.0.3/p5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .algorithm-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #007acc;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 5px;
+        }
+        .problem-statement {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .algorithm-steps {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .algorithm-steps ol {
+            padding-left: 20px;
+        }
+        .algorithm-steps li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .flowchart-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Monthly Salary Calculation System</h1>
+        
+        <div class="algorithm-section">
+            <div class="problem-statement">
+                <h2>Problem Statement</h2>
+                <p><strong>Calculate the monthly salary of employees by adding allowances and bonus, then deducting expenses based on performance rating.</strong></p>
+                
+                <p><strong>Inputs to the algorithm:</strong></p>
+                <ul>
+                    <li>Base Salary</li>
+                    <li>Rent Allowance</li>
+                    <li>Medical Allowance</li>
+                    <li>Tax amount</li>
+                    <li>Provident Fund amount</li>
+                    <li>Other Expenses</li>
+                    <li>Performance Rating</li>
+                </ul>
+                
+                <p><strong>Expected output:</strong></p>
+                <ul>
+                    <li>Total Monthly Salary</li>
+                </ul>
+            </div>
+
+            <div class="algorithm-steps">
+                <h2>Algorithm:</h2>
+                <ol>
+                    <li><strong>Step1:</strong> Start</li>
+                    <li><strong>Step2:</strong> Read/Input Base_Salary, Rent_Allowance, Medical_Allowance</li>
+                    <li><strong>Step3:</strong> Read/Input Tax, Provident_Fund, Other_Expenses</li>
+                    <li><strong>Step4:</strong> Read/Input Performance_Rating</li>
+                    <li><strong>Step5:</strong> Gross_Salary ← Base_Salary + Rent_Allowance + Medical_Allowance</li>
+                    <li><strong>Step6:</strong> If Performance_Rating >= 8 then Bonus ← Gross_Salary * 0.10</li>
+                    <li><strong>Step7:</strong> If Performance_Rating >= 5 AND Performance_Rating < 8 then Bonus ← Gross_Salary * 0.20</li>
+                    <li><strong>Step8:</strong> If Performance_Rating < 5 then Bonus ← 0</li>
+                    <li><strong>Step9:</strong> Total_Deductions ← Tax + Provident_Fund + Other_Expenses</li>
+                    <li><strong>Step10:</strong> Final_Salary ← Gross_Salary + Bonus - Total_Deductions</li>
+                    <li><strong>Step11:</strong> Print Final_Salary</li>
+                    <li><strong>Step12:</strong> End</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="flowchart-container">
+            <h2>Flowchart:</h2>
+            <div id="flowchart"></div>
+            <div class="note">
+                <strong>Control Structure Type:</strong> This algorithm uses <strong>Branching (Selection)</strong> control structure with multiple if-then conditions to determine the bonus percentage based on performance rating.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setup() {
+            let canvas = createCanvas(900, 1600);
+            canvas.parent('flowchart');
+            background(255);
+            noLoop();
+            drawFlowchart();
+        }
+        
+        function drawFlowchart() {
+            // Set text properties
+            textAlign(CENTER, CENTER);
+            textSize(11);
+            
+            let x = 450; // Center x position
+            let y = 60;  // Starting y position
+            
+            // 1. Terminal - Start
+            drawTerminal(x, y, "START");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 2. Input - Read Base Salary info
+            drawInputOutput(x, y, "Read Base_Salary,\nRent_Allowance,\nMedical_Allowance");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 3. Input - Read deductions
+            drawInputOutput(x, y, "Read Tax,\nProvident_Fund,\nOther_Expenses");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 4. Input - Read performance rating
+            drawInputOutput(x, y, "Read\nPerformance_Rating");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 5. Process - Calculate Gross Salary
+            drawProcess(x, y, "Gross_Salary =\nBase_Salary + Rent_Allowance\n+ Medical_Allowance");
+            y += 90;
+            drawArrow(x, y-45, x, y-25);
+            
+            // 6. Decision - Performance >= 8?
+            drawDecision(x, y, "Performance_Rating\n>= 8?");
+            let decision1Y = y;
+            
+            // Left branch (True) - 10% bonus
+            let leftX = x - 200;
+            drawArrow(x-50, decision1Y, leftX+20, decision1Y);
+            drawArrow(leftX+20, decision1Y, leftX+20, decision1Y+50);
+            drawProcess(leftX+20, decision1Y+80, "Bonus =\nGross_Salary * 0.10");
+            fill(0);
+            noStroke();
+            text("True", leftX+50, decision1Y-20);
+            
+            // Continue down for False branch
+            drawArrow(x, decision1Y+30, x, decision1Y+80);
+            fill(0);
+            noStroke();
+            text("False", x+40, decision1Y+55);
+            
+            // 7. Second Decision - Performance >= 5 AND < 8?
+            let decision2Y = decision1Y + 120;
+            drawDecision(x, decision2Y, "Performance_Rating >= 5\nAND < 8?");
+            
+            // Right branch (True) - 20% bonus
+            let rightX = x + 200;
+            drawArrow(x+50, decision2Y, rightX-20, decision2Y);
+            drawArrow(rightX-20, decision2Y, rightX-20, decision2Y+50);
+            drawProcess(rightX-20, decision2Y+80, "Bonus =\nGross_Salary * 0.20");
+            fill(0);
+            noStroke();
+            text("True", rightX-50, decision2Y-20);
+            
+            // Center branch (False) - 0% bonus
+            drawArrow(x, decision2Y+30, x, decision2Y+80);
+            drawProcess(x, decision2Y+110, "Bonus = 0");
+            fill(0);
+            noStroke();
+            text("False", x+40, decision2Y+55);
+            
+            // Converge all branches
+            let convergeY = decision2Y + 200;
+            
+            // Arrows converging
+            drawArrow(leftX+20, decision1Y+120, leftX+20, convergeY-30);
+            drawArrow(leftX+20, convergeY-30, x, convergeY-30);
+            
+            drawArrow(rightX-20, decision2Y+120, rightX-20, convergeY-30);
+            drawArrow(rightX-20, convergeY-30, x, convergeY-30);
+            
+            drawArrow(x, decision2Y+150, x, convergeY-30);
+            drawArrow(x, convergeY-30, x, convergeY-10);
+            
+            // 8. Process - Calculate Total Deductions
+            drawProcess(x, convergeY+20, "Total_Deductions =\nTax + Provident_Fund\n+ Other_Expenses");
+            y = convergeY + 110;
+            drawArrow(x, y-45, x, y-25);
+            
+            // 9. Process - Calculate Final Salary
+            drawProcess(x, y, "Final_Salary =\nGross_Salary + Bonus\n- Total_Deductions");
+            y += 90;
+            drawArrow(x, y-45, x, y-25);
+            
+            // 10. Output - Print Final Salary
+            drawInputOutput(x, y, "Print Final_Salary");
+            y += 80;
+            drawArrow(x, y-40, x, y-20);
+            
+            // 11. Terminal - End
+            drawTerminal(x, y, "END");
+        }
+        
+        function drawTerminal(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-60, y-20, 120, 40, 20);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawProcess(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            rect(x-90, y-30, 180, 60);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawInputOutput(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x-80, y-25, x+60, y-25, x+80, y+25, x-60, y+25);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawDecision(x, y, txt) {
+            fill(255);
+            stroke(0);
+            strokeWeight(2);
+            quad(x, y-35, x+80, y, x, y+35, x-80, y);
+            fill(0);
+            noStroke();
+            text(txt, x, y);
+        }
+        
+        function drawArrow(x1, y1, x2, y2) {
+            stroke(0);
+            strokeWeight(2);
+            line(x1, y1, x2, y2);
+            
+            // Arrowhead
+            push();
+            translate(x2, y2);
+            let angle = atan2(y2-y1, x2-x1);
+            rotate(angle);
+            fill(0);
+            noStroke();
+            triangle(0, 0, -10, -4, -10, 4);
+            pop();
+        }
+    </script>
+</body>
+</html>
